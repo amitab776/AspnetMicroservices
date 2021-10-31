@@ -16,6 +16,12 @@ services:
   portainer:
     image: portainer/portainer-ce
 
+  orderdb:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+
 
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
@@ -41,10 +47,17 @@ services:
       context: .
       dockerfile: Services/Discount/Discount.Grpc/Discount.Grpc/Dockerfile
 
+  ordering.api:
+    image: ${DOCKER_REGISTRY-}orderingapi
+    build:
+      context: .
+      dockerfile: Services/Ordering/Ordering.API/Dockerfile
+
 volumes:
   mongo_data:
   portainer_data:
   postgres_data:
   pgadmin_data:
+
 
 

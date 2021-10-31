@@ -38,13 +38,14 @@ namespace Ordering.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<int>> CheckoutOrder([FromBody] CheckoutOrderCommand command)
         {
-            await _mediatr.Send(command).ConfigureAwait(false);
-            return NoContent();
+            var result = await _mediatr.Send(command).ConfigureAwait(false);
+            return Ok(result);
         }
 
         [HttpPut(Name ="UpdateOrder")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult> UpdateOrder([FromBody] UpdateOrderCommand command)
         {
             await _mediatr.Send(command).ConfigureAwait(false);
@@ -54,6 +55,7 @@ namespace Ordering.API.Controllers
         [HttpDelete("{id}", Name ="DeleteOrder")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult> DeleteOrder(int id)
         {
             var query = new DeleteOrderCommand() { Id = id };
