@@ -32,7 +32,7 @@ namespace Catalog.API.Controllers
         [HttpGet("{id:length(24)}", Name = "GetProduct")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(IEnumerable<Product>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProduct(string id)
+        public async Task<ActionResult<Product>> GetProduct(string id)
         {
             var product = await _repository.GetProduct(id).ConfigureAwait(false);
             if(product == null)

@@ -7,7 +7,7 @@ namespace Catalog.API.Repository
     public interface IProductRepository
     {
         Task<IEnumerable<Product>> GetProducts();
-        Task<IEnumerable<Product>> GetProduct(string id);
+        Task<Product> GetProduct(string id);
         Task<IEnumerable<Product>> GetProductByName(string name);
         Task<IEnumerable<Product>> GetProductByCategory(string category);
 

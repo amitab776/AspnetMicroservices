@@ -25,7 +25,7 @@ namespace Ordering.Infrastructure.Persistence
             {
                 new Order
                 {
-                    UserName = "abhash",
+                    UserName = "swn",
                     FirstName = "Abhash",
                     LastName = "ab",
                     EmailAddress = "amitab776@gmail.com",

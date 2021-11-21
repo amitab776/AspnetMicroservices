@@ -25,13 +25,12 @@ namespace Catalog.API.Repository
                             .ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<Product>> GetProduct(string id)
+        public async Task<Product> GetProduct(string id)
         {
             return await _context
-                            .Products
-                            .Find(p => p.Id.Equals(id))
-                            .ToListAsync()
-                            .ConfigureAwait(false);
+                           .Products
+                           .Find(p => p.Id == id)
+                           .FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Product>> GetProductByName(string name)

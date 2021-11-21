@@ -114,12 +114,40 @@ services:
     container_name: ordering.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings:OrderingConnectionString=server=orderdb;Database=OrderDb;User Id=sa;Password=Abhash12345678;
       - EmailSettings:FromAddress=amitab776@gmail.com,ApiKey=,FromName=abhash
       - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+      - ConnectionStrings:OrderingConnectionString=server=orderdb;Database=OrderDb;User Id=sa;Password=Abhash12345678;
     depends_on:
       - orderdb
       - rabbitmq
     ports:
       - "8004:80"
+
+
+  ocelotapigateway:
+    container_name: ocelotapigateway
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - catalog.api
+      - basket.api
+      - discount.api
+      - ordering.api
+    ports:
+      - "8010:80"
+
+
+  shopping.aggregator:
+    container_name: shopping.aggregator
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ApiSettings:CatalogUrl=http://catalog.api"
+      - "ApiSettings:BasketUrl=http://basket.api"
+      - "ApiSettings:OrderingUrl=http://ordering.api"
+    depends_on:
+      - catalog.api
+      - basket.api
+      - ordering.api
+    ports:
+      - "8005:80"
 
